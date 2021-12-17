@@ -1,0 +1,8 @@
+KH001,Le Trong Bach,21 NguyenTrai LienChieu DaNang,0905255212
+KH002,Nguyen Van Hoai Nam,k32/12, Phan Chau Trinh, Hai Chau,Da Nang,0905255212
+KH003,Nguyen Van A,43, Yen Bai, HaiChau, DaNang,0905255212
+KH004,Nguyen Thi Minh,213 Hàm Nghi,Hai Chau,Da Nang,0905255212
+KH005,Le Trong Bach,21, Nguyen Trai Lien Chieu DaNang,0905255212
+KH006,Nguyen Van Hoai Nam,k32/12 Phan Chau Trinh,Hai Chau,Da Nang,0905255212
+KH007,Nguyen Van A,43 Yên Bái, Hai Chau,Da Nang,0905255212
+KH008,Nguyen Thi Minh,252 Hàm Nghi,hai Chau,Da Nang,0905255212
