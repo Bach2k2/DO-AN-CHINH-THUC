@@ -1,6 +1,7 @@
 #pragma once
 #include "Customer.h"
-class CustomerService
+#include "Service.h"
+class CustomerService: public Service
 {
 public:
     Customer* cusHead;
@@ -9,12 +10,13 @@ public:
 public:
     CustomerService();
     ~CustomerService();
-    void enqueue();
-    void enqueue(Customer* customer);//them sau
+    void add();
+    void add(Customer* customer);//them sau
     bool isEmpty();
-    void dequeue();//Xoa dau
+    void remove();//Xoa dau
     void update();
     void display();
+    void search();
     void searchByName();
     bool contain(string);
     Customer& getACus(string);

@@ -1,4 +1,6 @@
 #include "BillService.h"
+#include<windows.h>
+using namespace std;
 int BillService::billAmount = 0;
 BillService::BillService()
 {
@@ -11,43 +13,49 @@ BillService::~BillService()
 void BillService::readTwoId(string path)
 {
 	meterList.readFile("meter.txt");
-	cusList.readDataInFile("customer.txt");
+	cusList.readDataInFile("custome.txt");
 	path = "CongTo_KhachHang.txt";
 	fstream file(path, ios::in);
 	if (file.is_open())
 	{
-		string line;
-		while (getline(file, line))
+		try
 		{
-			int meterId = 0;
-			string cusId = "";
-			string result[3];
-			string word;
-			int count = 0;
-			for (int i = 0; i <= line.length(); i++)
+			string line;
+			while (getline(file, line))
 			{
-				if (line[i] == ',' || i == line.length())
+				int meterId = 0;
+				string cusId = "";
+				string result[3];
+				string word;
+				int count = 0;
+				for (unsigned i = 0; i <= line.length(); i++)
 				{
-					result[count++] = word;
-					word = "";
+					if (line[i] == ',' || i == line.length())
+					{
+						result[count++] = word;
+						word = "";
+					}
+					else
+					{
+						word += line[i];
+					}
 				}
-				else
-				{
-					word += line[i];
-				}
+				meterId = stof(result[0]);
+				cusId = result[1];
+				ElecMeter meter = meterList.getMeter(meterId);
+				Customer cus = cusList.getACus(cusId);
+				Date date1;
+				Date date2;
+				UnitPrice uPrice;
+				ElecBill* bill = new ElecBill(meter, cus, date1, date2, uPrice);
+				add(bill);
 			}
-			meterId = stof(result[0]);
-			cusId = result[1];
-			ElecMeter meter = meterList.getMeter(meterId);
-			cout << meter.getMeterNumber();
-			Customer cus = cusList.getACus(cusId);
-			cout << cus.getAddress();
-			Date date1;
-			Date date2;
-			UnitPrice uPrice;
-			ElecBill* bill = new ElecBill(meter, cus, date1, date2, uPrice);
-			add(bill);
 		}
+		catch (const char* e)
+		{
+			cout << e;
+		}
+
 	}
 	else
 	{
@@ -63,10 +71,15 @@ void BillService::writeIntoFile(string path)
 		while (bill != NULL)
 		{
 			//Dinh dang 
-			oFile << bill->cusID << endl << bill->customer.getCusName() << endl << bill->customer.getAddress() << endl << bill->customer.getPhoneNum() << endl;
-			oFile << bill->meter.getMeterNumber() << char(168) << bill->meter.getPrevMeter() << char(168) << bill->meter.getNextMeter() << char(168) << bill->meter.getUnit();
-			bill->showUnitPrice();
+			oFile << bill->getBillId() << endl;
+			oFile << bill->meter << endl;
+			oFile << bill->customer << endl;
+			oFile << " from: " << bill->getBeginDate();
+			oFile << " to:  " << bill->getEndDate() << endl;
+			oFile << "Total Price: " << bill->getPrice();
+			oFile << endl;
 			bill = bill->next;
+
 		}
 	}
 }
@@ -91,6 +104,7 @@ void BillService::display()
 	while (bill != NULL)
 	{
 		bill->showBillOut();
+		Sleep(1000);
 		bill = bill->next;
 	}
 }
@@ -150,24 +164,34 @@ void BillService::remove()
 			ElecBill* before = after;
 			while (after != NULL)
 			{
+				if (after->getBillId() == billID) break;
 				before = after;
 				after = after->next;
 			}
-			if (after != nullptr)
+			if (after != NULL)
 			{
-
 				if (pHead == after)
 				{
 					pHead = after->next;
+					after->next = NULL;
+					delete after;
+					after = NULL;
 				}
 				else
 				{
 					before->next = after->next;
+					after->next = NULL;
+					delete after;
+					after = NULL;
 				}
 				cout << "Xoa thanh cong" << endl;
 				billAmount--;
+
+			}
+			else {
 				throw "Khong tim thay con tro can xoa";
 			}
+
 		}
 	}
 }
@@ -212,13 +236,18 @@ bool BillService::contain(int billID)
 void BillService::calculatePrice()
 {
 	cout << " Dang tinh..." << endl;
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "|";
+		Sleep(100);
+	}
 	ElecBill* bill = pHead;
 	while (bill != NULL)
 	{
 		bill->calcBill();
 		bill = bill->next;
 	}
-	cout << " da tinh dc tien " << endl;
+	cout << "\nDa tinh dc tien " << endl;
 
 }
 void BillService::setAllUP(UnitPrice& UP)
@@ -241,6 +270,8 @@ ElecBill& BillService::getABill(int billId)
 		}
 		temp = temp->next;
 	}
+	throw "Khong tim thay bill nao";
+	return *temp;
 }
 void BillService::update()
 {
@@ -284,6 +315,8 @@ void BillService::update()
 					}
 				} while (!check);
 				temp->setBillId(n_billId);
+				cout << " Don vi da duoc chinh sua: " << endl;
+				temp->showBillOut();
 				break;
 			}
 			case 2:
@@ -306,6 +339,8 @@ void BillService::update()
 					else
 						check = true;
 				} while (!check);
+				temp->setBeginDate(n_beginDate);
+				temp->showBillOut();
 				break;
 			}
 			case 3:
@@ -328,6 +363,8 @@ void BillService::update()
 					else
 						check = true;
 				} while (!check);
+				temp->setEndDate(n_endDate);
+				temp->showBillOut();
 				break;
 			}
 			default:

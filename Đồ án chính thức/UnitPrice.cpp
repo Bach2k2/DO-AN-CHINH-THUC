@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 #include "UnitPrice.h"
 UnitPrice::UnitPrice(int unit)
@@ -86,6 +87,7 @@ void UnitPrice::calcPrice()
 						unitRank[4] = 100;
 						unitRank[5] = unitMeter - 400;
 					}
+	this->total = 0; // tra gt cu; // Dung
 	for (int i = 0; i < peak; i++)
 	{
 		priceRank[i] = unitRank[i] * rank[i];
@@ -94,20 +96,20 @@ void UnitPrice::calcPrice()
 }
 void UnitPrice::showUnitPrice()
 {
-	cout << "\n Muc\tSo chi dien tai moi muc \t Gia tien tai moi muc" << endl;
+	cout << "|\n Muc\t* So chi dien tai moi muc \t* Gia tien tai moi muc " << endl;
 	for (int i = 0; i < peak; i++)
 	{
-		cout << "\n" << i + 1 << "\t\t " << unitRank[i] << "  \t\t\t" << priceRank[i];
+		cout << "|\n" << setw(5) << i + 1 << setw(20) << unitRank[i] << setw(25) << priceRank[i];
 	}
-	cout << "\n Muc cao nhat: " << this->peak;
-	cout << "\n\t\t\t\t\t Tong tien:" << total << endl;
+	cout << "|\n Muc cao nhat: " << this->peak;
+	cout << "|\n Tong tien:" <<"\t\t\t\t\t " << total << endl;
 }
 void UnitPrice::readData(string path)
 {
 	ifstream file(path, ios::in);
 	if (file.is_open())
 	{
-		cout << " Da mo file " << endl;
+		cout << " Da doc file " << path <<endl;
 		for (int i = 0; i < 6; i++) {
 			file >> rank[i];
 		}

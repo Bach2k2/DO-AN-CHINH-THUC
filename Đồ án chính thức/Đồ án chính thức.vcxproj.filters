@@ -35,10 +35,10 @@
     <ClCompile Include="BillService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tempMonthData.cpp">
+    <ClCompile Include="MeterService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MeterService.cpp">
+    <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,7 +78,7 @@
     <Text Include="customer.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="dongia.txt">
+    <Text Include="UnitPrice.txt">
       <Filter>Source Files</Filter>
     </Text>
     <Text Include="CongTo_KhachHang.txt">
@@ -100,6 +100,9 @@
       <Filter>Source Files</Filter>
     </Text>
     <Text Include="12_2021.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="custome.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>

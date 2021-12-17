@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 using namespace std;
-class Customer {
-protected:
+class Customer{
+private:
 	string cusId;
 	string cusName;
 	string phoneNum;

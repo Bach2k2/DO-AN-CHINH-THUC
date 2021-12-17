@@ -26,12 +26,14 @@ public:
     void setBillId(int);
     int getBillId() { return this->billId; };
    // void setAllData();
-    void setBeginDate();
+    void setBeginDate(Date&);
+    void setEndDate(Date&);
     Date& getBeginDate();
     Date& getEndDate();
+    double getPrice();
     void setMeter(const ElecMeter &);
     void setCustomer(const Customer&);
-    void setEndDate();
+    
     void calcBill();
     void showUnitPrice();
     void showBillOut();

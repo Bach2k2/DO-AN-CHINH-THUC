@@ -1,5 +1,4 @@
-﻿#pragma once
-#include<iostream>
+﻿#include<iostream>
 #include "MeterService.h"
 #include "CustomerService.h"
 #include "BillService.h"
@@ -24,25 +23,24 @@ int main()
 	{
 		//cout << "Nhap duong dan file bill  -- Nhap meter.txt" << endl;
 		string uPath;
-		uPath = "dongia.txt";
+		uPath = "UnitPrice.txt";
 		unitPrice.readData(uPath);
-		system("pause");
 		string mPath;
 		//	cin >> mPath;
 		mPath = "meter.txt";
 		meterManager.readFile(mPath);
 		system("pause");
-		cout << "Calculate price" << endl;
-		//	qli.calculatePrice();
-		system("pause");
 		string path2;
-		//cout << "Nhap duong dan file customer  -- Nhap customer.txt" << endl;
-		//cin >> path2;
-		path2 = "customer.txt";
+		path2 = "custome.txt";
 		cusManager.readDataInFile(path2);
+		cusManager.display();
 		system("pause");
 		string path3 = "CongTo_KhachHang.txt";
 		billManager.readTwoId(path3);
+		// Tinh san gia tien moi hoa don: 
+		billManager.readNewMonth("07_2021.txt");
+		system("pause");
+		break;
 	}
 	default:
 		cout << " Da huy" << endl;
@@ -57,16 +55,16 @@ void displayBillMenu()
 	{
 		system("cls");
 		cout << "\n\n";
-		cout << "\n\t\t\t|----------------------Menu---------------------|";
-		cout << "\n\t\t\t|1. Them tat ca hoa don cho thang tiep theo|";
-		cout << "\n\t\t\t|2. Cap nhat thong tin mot hoa don\t\t|";
-		cout << "\n\t\t\t|3. Xuat ra mot hoa don\t\t\t|";
-		cout << "\n\t\t\t|4. Xoa di mot hoa don\t\t\t\t|";
-		cout << "\n\t\t\t|5. Hien thi het tat ca hoa don trong 1 thang\t\t\t|";
-		cout << "\n\t\t\t|6. luu vao file tat ca hoa don\t\t\t|";
-		cout << "\n\t\t\t|7. Quan ly hoa don theo tung khu vuc \t\t|";
-		cout << "\n\t\t\t|0. Tro ve menu chinh\t\t\t|";
-		cout << "\n\t\t\t|-----------------------------------------------|";
+		cout << "\n\t\t\t|----------------------QUAN LY HOA DON--------------------------|";
+		cout << "\n\t\t\t|1. Them tat ca hoa don cho thang tiep theo   \t\t\t|";
+		cout << "\n\t\t\t|2. Cap nhat thong tin mot hoa don\t\t\t\t|";
+		cout << "\n\t\t\t|3. Xuat ra mot hoa don   \t\t\t\t\t|";
+		cout << "\n\t\t\t|4. Xoa di mot hoa don\t\t\t\t\t\t|";
+		cout << "\n\t\t\t|5. Hien thi het tat ca hoa don trong 1 thang  \t\t\t|";
+		cout << "\n\t\t\t|6. luu vao file tat ca hoa don\t\t\t\t\t|";
+		cout << "\n\t\t\t|7. Quan ly hoa don theo tung khu vuc \t\t\t\t|";
+		cout << "\n\t\t\t|0. Tro ve menu chinh  \t\t\t\t\t\t|";
+		cout << "\n\t\t\t|---------------------------------------------------------------|";
 		cout << "\n\n\t\t\tNhap lua chon: ";
 		cin >> choice;
 		switch (choice)
@@ -74,7 +72,7 @@ void displayBillMenu()
 		case 1:
 		{
 			system("cls");
-			cout << "\nCHUC NANG: THEM MOI TAT CA HOA DON CHO THANG TIEP THEO" << endl;
+			cout << "\nCHUC NANG: THEM MOI TAT CA HOA DON CHO THANG TIEP THEO. " << endl;
 			cout << "nhap file thang tiep theo can them" << endl;
 			string monthPath;
 			cin >> monthPath;
@@ -85,7 +83,7 @@ void displayBillMenu()
 		case 2:
 		{
 			system("cls");
-			cout << "\nCHUC NANG: CAP NHAT THONG TIN MOT HOA DON" << endl;
+			cout << "\nCHUC NANG: CAP NHAT THONG TIN MOT HOA DON. " << endl;
 			billManager.update();
 			system("pause");
 			break;
@@ -93,7 +91,7 @@ void displayBillMenu()
 		case 3:
 		{
 			system("cls");
-			cout << "\nCHUC NANG: TIM KIEM THONG TIN MOT HOA DON" << endl;
+			cout << "\nCHUC NANG: TIM KIEM THONG TIN MOT HOA DON. " << endl;
 			cout << "\nNhap so cong to cua hoa don: ";
 			billManager.search();
 			system("pause");
@@ -105,7 +103,6 @@ void displayBillMenu()
 			cout << "\nCHUC NANG: XOA MOT HOA DON";
 			cout << "\nNhap so cong to cua hoa don can xoa: ";
 			billManager.remove();
-			cout << "Xoa thanh cong" << endl;
 			system("pause");
 			break;
 		}
@@ -125,11 +122,12 @@ void displayBillMenu()
 			cout << "Nhap duong dan: ";
 			cin >> savePath;
 			billManager.writeIntoFile(savePath);
+			break;
 		}
 		case 7:
 		{
 			cout << "\n CHUC NANG: IN TAT CA HOA DON THEO KHU VUC" << endl;
-			cin.ignore(32767, '\n');
+			cin.ignore(100,'\n');
 			cout << "Nhap khu vuc muon tim kiem:  " << endl;
 			string area;
 			getline(cin, area);
@@ -187,15 +185,15 @@ void displayMeterMenu()
 	{
 		system("cls");
 		cout << "\n\n";
-		cout << "\n\t\t\t|---------------------QUAN LY CONG TO DIEN---------------------|";
-		cout << "\n\t\t\t|1. Them moi mot cong to  \t\t\t|";
-		cout << "\n\t\t\t|2. Cap nhat thong tin mot cong to\t\t|";
-		cout << "\n\t\t\t|3. Tim kiem mot cong to\t\t\t|";
-		cout << "\n\t\t\t|4. Xoa mot cong to\t\t\t\t|";
+		cout << "\n\t\t\t|-----------------------QUAN LY CONG TO DIEN---------------------|";
+		cout << "\n\t\t\t|1. Them moi mot cong to  \t\t\t\t\t|";
+		cout << "\n\t\t\t|2. Cap nhat thong tin mot cong to\t\t\t\t|";
+		cout << "\n\t\t\t|3. Tim kiem mot cong to\t\t\t\t\t|";
+		cout << "\n\t\t\t|4. Xoa mot cong to\t\t\t\t\t\t|";
 		cout << "\n\t\t\t|5. Hien thi het tat ca cong to dang quan ly\t\t\t|";
 		cout << "\n\t\t\t|6. In vao file tat ca cong to da cap nhat\t\t\t|";
-		cout << "\n\t\t\t|7. Quan ly cong to theo tung thang  \t\t|";
-		cout << "\n\t\t\t|0. Tro ve menu chinh\t\t\t|";
+		cout << "\n\t\t\t|7. Quan ly cong to theo tung thang  \t\t\t\t|";
+		cout << "\n\t\t\t|0. Tro ve menu chinh\t\t\t\t\t\t|";
 		cout << "\n\t\t\t|---------------------------------------------------------------|";
 		cout << "\n\n\t\t\tNhap lua chon: ";
 		cin >> choice;
@@ -307,16 +305,16 @@ void displayCustomerMenu()
 	{
 		system("cls");
 		cout << "\n\n";
-		cout << "\n\t\t\t|----------------------Quan ly Khach Hang---------------------|";
-		cout << "\n\t\t\t|1. Them moi khach hang \t\t\t|";
-		cout << "\n\t\t\t|2. Cap nhat thong tin khach hang\t\t|";
-		cout << "\n\t\t\t|3. Tim kiem mot khach hang\t\t\t|";
-		cout << "\n\t\t\t|4. Xoa di mot khach hang\t\t\t|";
-		cout << "\n\t\t\t|5. In danh sach cua tat ca khach hang\t\t|";
-		cout << "\n\t\t\t|6. Dua du lieu vao file\t\t\t|";
-		cout << "\n\t\t\t|7. Sap xep tat ca khach hang theo ten\t\t\t|";
-		cout << "\n\t\t\t|0. Tro ve menu chinh   \t\t\t|";
-		cout << "\n\t\t\t|-------------------------------------------------------------|";
+		cout << "\n\t\t\t|----------------------Quan ly Khach Hang-----------------------|";
+		cout << "\n\t\t\t|1. Them moi khach hang \t\t\t\t\t|";
+		cout << "\n\t\t\t|2. Cap nhat thong tin khach hang\t\t\t\t|";
+		cout << "\n\t\t\t|3. Tim kiem mot khach hang\t\t\t\t\t|";
+		cout << "\n\t\t\t|4. Xoa di mot khach hang\t\t\t\t\t|";
+		cout << "\n\t\t\t|5. In danh sach cua tat ca khach hang\t\t\t\t|";
+		cout << "\n\t\t\t|6. Dua du lieu vao file\t\t\t\t\t|";
+		cout << "\n\t\t\t|7. Sap xep tat ca khach hang theo ten\t\t\t\t|";
+		cout << "\n\t\t\t|0. Tro ve menu chinh   \t\t\t\t\t|";
+		cout << "\n\t\t\t|---------------------------------------------------------------|";
 		cout << "\n\n\t\t\tNhap lua chon : ";
 		cin >> choice;
 		switch (choice)
@@ -325,7 +323,7 @@ void displayCustomerMenu()
 		{
 			system("cls");
 			cout << "\nCHUC NANG: THEM KHACH HANG " << endl;
-			cusManager.enqueue();
+			cusManager.add();
 			system("pause");
 			break;
 		}
@@ -342,8 +340,21 @@ void displayCustomerMenu()
 		{
 			system("cls");
 			cout << "\nCHUC NANG: TIM KIEM KHACH HANG " << endl;
-			//	cout << "\nNhap so cong to cua khach hang:";
-			cusManager.searchByName();
+			cout << " Chon loai tim kiem :" << endl;
+			cout << "1. Theo ma khach hang." << endl;
+			cout << "2.Theo ten" << endl;
+			cout << "Lua chon:  ";
+			int s_choice;
+			cin >> s_choice;
+			if (s_choice == 1)
+			{
+				cusManager.search();
+			}
+			else if(s_choice==2)
+			{
+				cusManager.searchByName();
+			}
+			
 			system("pause");
 			break;
 		}
@@ -381,7 +392,7 @@ void displayCustomerMenu()
 			break;
 		}
 		case 0:
-			cout << "\n\t\t\t---------Trở về menu----------" << endl;
+			cout << "\n\t\t\t---------TRO VE MENU CHINH----------" << endl;
 			system("pause");
 			break;
 		default:
@@ -397,10 +408,10 @@ void displayMainMenu()
 	{
 		system("cls");
 		cout << "\n\n";
-		cout << "\n\t\t\t|--------------------Menu chinh----------------|";
+		cout << "\n\t\t\t|-------------------Menu chinh------------------|";
 		cout << "\n\t\t\t|1. Quan ly cong to dien \t\t\t|";
-		cout << "\n\t\t\t|2. Quan ly khach hang\t\t\t|";
-		cout << "\n\t\t\t|3. Quan ly hoa don \t\t\t|";
+		cout << "\n\t\t\t|2. Quan ly khach hang\t\t\t\t|";
+		cout << "\n\t\t\t|3. Quan ly hoa don \t\t\t\t|";
 		cout << "\n\t\t\t|0. Thoat\t\t\t\t\t|";
 		cout << "\n\t\t\t|-----------------------------------------------|";
 		cout << "\n\n\t\t\tNhap lua chon: ";

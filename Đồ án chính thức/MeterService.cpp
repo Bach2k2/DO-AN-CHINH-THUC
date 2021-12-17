@@ -1,12 +1,15 @@
 #include "MeterService.h"
 #include <string>
 #include <fstream>
+#include <iomanip>
 using namespace std;
 int MeterService::mAmount = 0;
 MeterService::MeterService()
 {
 	this->mHead = NULL;
 	this->mTail = NULL;
+	this->monthManage = 0;
+	this->yearManage = 0;
 }
 MeterService::~MeterService()
 {
@@ -59,7 +62,6 @@ void MeterService::add(ElecMeter* meter)
 		mTail->next = meter;
 		mTail = meter;
 	}
-	cout << " da add" << endl;
 	mAmount++;
 }
 void MeterService::readFile(string path)
@@ -153,8 +155,10 @@ void MeterService::remove()
 }
 void MeterService::display()
 {
+	cout << "\t\t\t\t DANH SACH CAC CONG TO DIEN HIEN HANH" << endl;
 	ElecMeter* meter = mHead;
-	cout << "So cong to " << "\t\t" << "so dien truoc" << "\t\t" << "so dien sau" << "\t\t" << "so dien tieu thu" << endl;
+	cout << "|\t So cong to " << setw(18) << "|\t"<<" So dien truoc\t" << setw(18) << " | \t"<<"So dien sau \t" << setw(28)<< "|\t "<<"So dien tieu thu\t | " << endl;
+	cout << "_________________________________________________________________________________________________________________________________________________________" << endl;
 	while (meter != NULL)
 	{
 		cout << *meter;
@@ -170,7 +174,6 @@ ElecMeter& MeterService::getMeter(int meterNumber)
 		{
 			if (temp->getMeterNumber() == meterNumber)
 			{
-				cout << "da tim thay" << endl;
 				return *temp;
 			}
 			temp = temp->next;
@@ -273,6 +276,7 @@ void MeterService::writeFile(string path)
 	ofstream file(path, ios::out);
 	if (file.is_open())
 	{
+		file << "| So cong to " << setw(18) << "| So dien truoc" << "\t\t" << "| So dien sau \t" << "" << "|\t So dien tieu thu\t\t|" << endl;
 		ElecMeter* meter = mHead;
 		while (meter != NULL)
 		{

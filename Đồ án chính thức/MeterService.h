@@ -18,8 +18,6 @@ private:
         void add(ElecMeter*);// Nhận từ file
         bool isEmpty();// Danh sách có rỗng
         void remove();// Xóa
-     //   void removeFirst();//Xóa
-     //   void removeAll();// Xóa hết
         void update();  //chưa làm .
         void display(); // Rồi
         void search();  // chưa làm đc

@@ -25,7 +25,7 @@ public:
     void update();  //chưa làm .
     void display(); // Rồi
     void search();  // chưa làm đc
-    void readAllDataInFile(string path); // Đọc file
+ //   void readAllDataInFile(string path); // Đọc file
 
     bool contain(int);
     void calculatePrice();

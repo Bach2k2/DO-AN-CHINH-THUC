@@ -147,7 +147,9 @@
     <ClCompile Include="ElecMeter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeterService.cpp" />
-    <ClCompile Include="tempMonthData.cpp" />
+    <ClCompile Include="Source.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="UnitPrice.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,10 +170,11 @@
     <Text Include="10_2021.txt" />
     <Text Include="11_2021.txt" />
     <Text Include="12_2021.txt" />
+    <Text Include="custome.txt" />
     <Text Include="meter.txt" />
     <Text Include="CongTo_KhachHang.txt" />
     <Text Include="customer.txt" />
-    <Text Include="dongia.txt" />
+    <Text Include="UnitPrice.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

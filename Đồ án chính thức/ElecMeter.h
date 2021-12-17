@@ -4,7 +4,7 @@
 using namespace std;
 class ElecMeter
 {
-protected:
+private:
     int meterNumber;// Khoa chinh
     int prevMeter;
     int nextMeter;
@@ -30,6 +30,5 @@ public:
     int getUnit() { return unit; }
     friend ostream& operator<<(ostream&,const ElecMeter&);
     void writeFile(string);
-    
 };
 

@@ -1,9 +1,9 @@
-#pragma once
 #include "CustomerService.h"
 #include <string>
 #include<fstream>
 #include <iostream>
 #include <string>
+#include<iomanip>
 using namespace std;
 CustomerService::CustomerService()
 {
@@ -13,7 +13,7 @@ CustomerService::CustomerService()
 CustomerService::~CustomerService() {}
 int CustomerService::cusAmount = 0;
 //QUEUE
-void CustomerService::enqueue()
+void CustomerService::add()
 {
 	bool check = true;
 	Customer* customer = new Customer();
@@ -46,7 +46,7 @@ void CustomerService::enqueue()
 	//	cusTail->next = cusHead;
 	cusAmount++;
 }
-void CustomerService::enqueue(Customer* customer)
+void CustomerService::add(Customer* customer)
 {
 	if (cusHead == NULL)
 	{
@@ -60,7 +60,7 @@ void CustomerService::enqueue(Customer* customer)
 	//	cusTail->next = cusHead;
 	cusAmount++;
 }
-void CustomerService::dequeue()
+void CustomerService::remove()
 {
 	bool check = false;
 	cout << "Co thuc su muon xoa? " << endl;
@@ -110,17 +110,18 @@ void CustomerService::dequeue()
 		cout << " Khong xoa nua " << endl;
 	}
 }
-
-
 void CustomerService::display()
 {
+	cout << " \n\t\t\t\t \t\tDANH SACH KHACH HANG DANG KY TIEN DIEN " << endl;
+	cout << "______________________________________________________________________________________________________________________________________________" << endl;
 	if (isEmpty())
 	{
 		cout << "Danh sach rong" << endl;
 	}
 	else
 	{
-		cout << "| Ma Khach Hang | " << "| Ten khach hang | " << "| Dia chi | " << "| So dien thoai | " << endl;
+		cout <<"|\t Ma Khach Hang "<<setw(7) << "|\t"<<"  Ten khach hang\t"<<setw(25)<<" | \t\t\t Dia chi \t " << setw(18) << " | \t"<<" So dien thoai \t|" << endl;
+		cout << "______________________________________________________________________________________________________________________________________________" << endl;
 		Customer* temp = cusHead;
 		while (temp != NULL)
 		{
@@ -174,13 +175,15 @@ void CustomerService::readDataInFile(string path)
 	if (file.is_open())
 	{
 		string line;
-		while (getline(file, line))
+		while (!file.eof())
 		{
+			string line;
+			getline(file, line);
 			Customer* cus = new Customer();
 			cus->fromString(line);
-			enqueue(cus);
+			add(cus);
 		}
-		cout << "\nDu lieu da them vao\n";
+		cout << "\nDu lieu khach hang duoc them tu " << path <<": \n";
 		file.close();
 	}
 	else
@@ -320,14 +323,21 @@ void CustomerService::update()
 Customer& CustomerService::getACus(string cusId)
 {
 	Customer* temp = cusHead;
-	while (temp != NULL)
+	if (contain(cusId))
 	{
-		if (temp->getCusId().compare(cusId) == 0)
+		while (temp != NULL)
 		{
-			cout << " Tim thay kh" << endl;
-			return *temp;
+			if (temp->getCusId().compare(cusId) == 0)
+			{
+				return *temp;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
+	}
+	else
+	{
+		throw "Khong the tra ve khach hang nay ";
+		return *cusHead;
 	}
 }
 void CustomerService::displayUpdateMenu()
@@ -391,3 +401,26 @@ void CustomerService::sortByName()
 	cout << " Da sap xep xong" << endl;
 	system("pause");
 }
+//Tim kiem theo id;
+void CustomerService::search()
+{
+	string cusId;
+	cout << "Nhap ma khach hang can tim kiem " << endl;
+	cin >> cusId;
+	Customer* cus = cusHead;
+	while (cus != NULL)
+	{
+		if (cus->getCusId().compare(cusId)) break;
+		cus = cus->next;
+	}
+	if (cus == NULL)
+	{
+		cout << "Khong tim thay khach hang nay" << endl;
+	}
+	else
+	{
+		cout << "THONG BAO: Da tim thay! " << endl;
+		cout << *cus;
+	}
+}
+
